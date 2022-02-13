@@ -9,14 +9,21 @@ import requests
 colorama.init()
 clear = "clear"
 version = "1.00"
-maincolor = colorama.Fore.CYAN
+maincolor = colorama.Fore.LIGHTCYAN_EX
 seccolor = colorama.Fore.WHITE
 reset = colorama.Fore.RESET
 
 timeout = 3000
-socks5apis = [f"https://api.proxyscrape.com/v2/?request=displayproxies&protocol=socks5&timeout={str(timeout)}&country=all&ssl=all&anonymity=all"]
-socks4apis = [f"https://api.proxyscrape.com/v2/?request=displayproxies&protocol=socks4&timeout={str(timeout)}&country=all&ssl=all&anonymity=all"]
-httpapis = [f"https://api.proxyscrape.com/v2/?request=displayproxies&protocol=http&timeout={str(timeout)}&country=all&ssl=all&anonymity=all"]
+filepath = "scrapedproxies.txt"
+socks5apis = [
+f"https://api.proxyscrape.com/v2/?request=displayproxies&protocol=socks5&timeout={str(timeout)}&country=all&ssl=all&anonymity=all",
+]
+socks4apis = [
+f"https://api.proxyscrape.com/v2/?request=displayproxies&protocol=socks4&timeout={str(timeout)}&country=all&ssl=all&anonymity=all",
+]
+httpapis = [
+f"https://api.proxyscrape.com/v2/?request=displayproxies&protocol=http&timeout={str(timeout)}&country=all&ssl=all&anonymity=all",
+]
 
 ### SCRAPER ###
 def scraper(type):
@@ -27,16 +34,27 @@ def scraper(type):
         apis = socks4apis
     elif type == "http":
         apis = httpapis
-    print("Scraping", type, "...")
+    print(maincolor + "Scraping", type.upper(), "...")
     for api in apis:
         try:
             r = requests.get(api)
-            with open("scrapedproxies.txt","a+") as f:
-                f.write(r.text)
-            print(colorama.Fore.GREEN + "Successfully scraped Proxies")
+            count = 0
+            for proxy in r.iter_lines():
+                proxies.append(proxy)
+                count += 1
+            print(colorama.Fore.GREEN + f"Successfully scraped {str(count)} Proxies")
         except:
-            print(colorama.Fore.RED + "Error: API Offline")
-    input(reset + "Press any Key to Exit ... ")
+            print(colorama.Fore.RED + "Scraped 0 Proxies")
+    print("Scraped" , str(len(proxies)), "in total")
+    for proxy in proxies:
+        with open(filepath,"a+") as f:
+            if proxy != "":
+                f.write(proxy.decode("utf-8") + "\n")
+    choice = input(maincolor + "Exit the Program (Y/n) ")
+    if choice.lower() == "n":
+        pass
+    else:
+        exit()
 
 def socks5scrape():
     scraper("socks5")
