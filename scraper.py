@@ -2,7 +2,9 @@
 import colorama
 from sys import exit
 from os import system
+from time import sleep
 import requests
+import json
 
 
 ### GLOBALS ###
@@ -27,6 +29,22 @@ httpapis = [
 f"https://api.proxyscrape.com/v2/?request=displayproxies&protocol=http&timeout={str(timeout)}&country=all&ssl=all&anonymity=all",
 "https://www.proxy-list.download/api/v1/get?type=http"
 ]
+
+### CONFIG LOADER ###
+def loadconfig():
+    try:
+        with open("config.json","r") as f:
+            config = json.load(f)
+            global timeout 
+            global filepath
+            timeout = config["timeout"]
+            filepath = config["filepath"]
+        print(colorama.Fore.GREEN + "Successfully loaded config")
+    except:
+        print(colorama.Fore.RED + "Error: Config not available or corrupt")
+        timeout = 300
+        filepath = "scrapedproxies.txt"
+    sleep(0.5)
 
 ### SCRAPER ###
 def scraper(type):
@@ -99,6 +117,10 @@ choices1 = {"0":exit,"1":socks5scrape,"2":socks4scrape,"3":httpscrape}
 ### PROGRAM ###
 def main():
     while True:
+        system(clear)
+        choice = input(maincolor + "Load config (Y/n) ")
+        if not choice.lower() == "n":
+            loadconfig()
         system(clear)
         banner()
         mainmenu()
