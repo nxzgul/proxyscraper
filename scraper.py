@@ -17,12 +17,15 @@ timeout = 3000
 filepath = "scrapedproxies.txt"
 socks5apis = [
 f"https://api.proxyscrape.com/v2/?request=displayproxies&protocol=socks5&timeout={str(timeout)}&country=all&ssl=all&anonymity=all",
+"https://www.proxy-list.download/api/v1/get?type=socks5"
 ]
 socks4apis = [
 f"https://api.proxyscrape.com/v2/?request=displayproxies&protocol=socks4&timeout={str(timeout)}&country=all&ssl=all&anonymity=all",
+"https://www.proxy-list.download/api/v1/get?type=socks4"
 ]
 httpapis = [
 f"https://api.proxyscrape.com/v2/?request=displayproxies&protocol=http&timeout={str(timeout)}&country=all&ssl=all&anonymity=all",
+"https://www.proxy-list.download/api/v1/get?type=http"
 ]
 
 ### SCRAPER ###
