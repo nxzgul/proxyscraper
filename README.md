@@ -7,3 +7,8 @@ Download :
 * cd proxyscraper
 * pip3 install -r requirements.txt
 * python3 scraper.py / python scraper.py
+<br>
+
+APIs : 
+* https://proxyscrape.com/
+* https://www.proxy-list.download/
