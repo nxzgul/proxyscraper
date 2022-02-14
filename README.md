@@ -12,3 +12,5 @@ Download :
 APIs : 
 * https://proxyscrape.com/
 * https://www.proxy-list.download/
+* https://www.proxyscan.io/
+* http://pubproxy.com/
