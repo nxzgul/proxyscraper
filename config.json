@@ -1,4 +1,7 @@
 {
   "timeout":2000,
-  "filepath":"proxies.txt"
+  "safetofile":1,
+  "filepath":"proxies.txt",
+  "webhook":0,
+  "webhookurl":""
 }
