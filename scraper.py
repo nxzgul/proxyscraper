@@ -96,7 +96,7 @@ def scraper(type):
     print(maincolor + f"Deleted {str(count - len(proxies))} duplicates")
     if safetofile:
         for proxy in proxies:
-            with open(filepath,"w") as f:
+            with open(filepath,"a+") as f:
                 if proxy != "":
                     f.write(proxy.decode("utf-8") + "\n")
     if webhook:
