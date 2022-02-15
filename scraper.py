@@ -48,6 +48,7 @@ f"https://www.proxyscan.io/api/proxy?format=txt&limit=20&type=https&ping={str(ti
 "https://raw.githubusercontent.com/jetkai/proxy-list/main/online-proxies/txt/proxies-http%2Bhttps.txt",
 "https://raw.githubusercontent.com/sunny9577/proxy-scraper/master/proxies.txt"
 ]
+proxyapis = {"socks5":socks5apis,"socks4":socks4apis,"http":httpapis}
 
 ### CONFIG LOADER ###
 def loadconfig():
@@ -74,12 +75,7 @@ def loadconfig():
 ### SCRAPER ###
 def scraper(type):
     proxies = []
-    if type == "socks5":
-        apis = socks5apis
-    elif type == "socks4":
-        apis = socks4apis
-    elif type == "http":
-        apis = httpapis
+    apis = proxyapis[type]
     print(maincolor + "Scraping", type.upper(), "...")
     for api in apis:
         try:
@@ -100,7 +96,7 @@ def scraper(type):
     print(maincolor + f"Deleted {str(count - len(proxies))} duplicates")
     if safetofile:
         for proxy in proxies:
-            with open(filepath,"a+") as f:
+            with open(filepath,"w") as f:
                 if proxy != "":
                     f.write(proxy.decode("utf-8") + "\n")
     if webhook:
@@ -116,7 +112,7 @@ def scraper(type):
                 message = ""
                 count = 0
         for msg in messages:
-            if msg != "" or " ":            
+            if msg != "":            
                 hook = DiscordWebhook(url=webhookurl,content=msg, rate_limit_retry=True)
                 r = hook.execute()
                 sleep(0.5)
